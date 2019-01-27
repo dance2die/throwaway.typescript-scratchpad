@@ -1,11 +1,26 @@
-function padLeft(value: string, padding: any) {
-  if (typeof padding === "number") {
-    return Array(padding + 1).join(" ") + value;
-  }
-  if (typeof padding === "string") {
-    return padding + value;
-  }
-  throw new Error(`Expected string or number, got '${padding}'.`);
+import domElements from "./domElements";
+// console.log(`typeof domElements`, Object.values(domElements));
+
+// const map = domElements.reduce((acc: any, dom) => (acc[dom] = dom), {});
+const map = domElements.reduce((acc: any, dom) => {
+  // console.log(`dom`, dom);
+  acc[dom] = dom;
+  return acc;
+}, {});
+// console.log(`map`, map);
+
+type ValueOf<T> = T[keyof T];
+type DOMType = ValueOf<typeof map>;
+
+// // https://www.typescriptlang.org/docs/handbook/advanced-types.html#mapped-types
+// // export type DOMType = { [K in domElements]: string };
+// export type DOMType = { [K in domElements]: string };
+// // export type DOMType = { [K in keyof domElements]: domElements[K] };
+// export type DOMType = [...domElements];
+
+function printDOMType(domType: DOMType): void {
+  console.log(`DOMType`, domType);
 }
 
-console.log(padLeft("Hello world", 4)); // returns "    Hello world"
+printDOMType("xxx");
+printDOMType("div");
