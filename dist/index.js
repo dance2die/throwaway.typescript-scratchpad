@@ -34,18 +34,29 @@ var arr = asLiterals(domElements);
 //   [...Object.values(domElements)],
 //   typeof arr
 // );
-// const map = { a: "a", div: "div" };
 // interface Map {
 //   [key: string]: typeof arr;
 // }
+// https://basarat.gitbooks.io/typescript/docs/types/literal-types.html
+function strEnum(o) {
+    return o.reduce(function (res, key) {
+        res[key] = key;
+        return res;
+    }, Object.create(null));
+}
+// const map = strEnum(domElements);
 // type DOMType = typeof Map;
 // type DOMType = typeof arr[number];
 // type DOMType = typeof domElements[number];
-var map = domElements.reduce(function (acc, dom) {
-    acc[dom] = dom;
-    return acc;
-}, {});
-console.log("map", map);
+// const map = domElements.reduce(
+//   (acc, dom) => {
+//     acc[dom] = dom;
+//     return acc;
+//   },
+//   {} as { [key: string]: string }
+// );
+var map = { a: "a", div: "div" };
+console.log("map", map, Object.entries(map));
 // https://basarat.gitbooks.io/typescript/docs/types/moving-types.html
 // const colors = {
 //   red: 'red',
@@ -56,8 +67,8 @@ console.log("map", map);
 function printDOMType(domType) {
     console.log("DOMType", domType);
 }
-printDOMType("abcdefg");
-printDOMType("xxx");
-printDOMType("div");
-printDOMType("a");
-printDOMType("foo");
+// printDOMType("abcdefg");
+// printDOMType("xxx");
+// printDOMType("div");
+// printDOMType("a");
+// printDOMType("foo");

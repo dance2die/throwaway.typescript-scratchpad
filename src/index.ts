@@ -38,7 +38,7 @@ const  asLiterals = <T extends string>(arr: T[]) => arr;
 // function tuple<T extends string[]>(...o: T) { return o; }
 // const arr = tuple("foo", "bar", "loo");
 // const arr = asLiterals(domElements);
-const domElements: string[] = ["xxx", "div", "a", "abc"];
+const domElements = ["xxx", "div", "a", "abc"];
 // const arr = asLiterals(["xxx", "div", "a", "abc"]);
 const arr = asLiterals(domElements);
 
@@ -48,20 +48,38 @@ const arr = asLiterals(domElements);
 //   [...Object.values(domElements)],
 //   typeof arr
 // );
-// const map = { a: "a", div: "div" };
 // interface Map {
 //   [key: string]: typeof arr;
 // }
 
+// // https://basarat.gitbooks.io/typescript/docs/types/literal-types.html
+// function strEnum<T extends string>(o: Array<T>): { [K in T]: K } {
+//   return o.reduce((res, key) => {
+//     res[key] = key;
+//     return res;
+//   }, Object.create(null));
+// }
+
+// const map = strEnum(domElements);
+
 // type DOMType = typeof Map;
 // type DOMType = typeof arr[number];
 // type DOMType = typeof domElements[number];
-let map: { [key: string]: string } = domElements.reduce((acc: any, dom) => {
-  acc[dom] = dom;
-  return acc;
-}, {});
-console.log(`map`, map);
-type DOMType = keyof typeof map;
+// const map: typeof map0 = domElements.reduce(
+//   (acc, dom) => {
+//     acc[dom] = dom;
+//     return acc;
+//   },
+//   {} as { [key: string]: string }
+//   );
+
+// const map: {[key: string extends keyof typeof domElements]} = { a: "a", div: "div" };
+// const map = { a: "a", div: "div" };
+// console.log(`map`, map, Object.entries(map));
+// type DOMType = keyof typeof map;
+
+// https://stackoverflow.com/a/54061487/4035
+type DOMType = typeof arr[number];
 
 // https://basarat.gitbooks.io/typescript/docs/types/moving-types.html
 // const colors = {
